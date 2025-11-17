@@ -21,12 +21,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.text_total).text =
             getString(R.string.text_total, total)
     }
-    private fun prepareViewModel() {
-        updateText(viewModel.total)
-
+    private fun prepareViewModel(){
+        // Observe the LiveData object
+        viewModel.total.observe(this) {
+            updateText(it)
+        }
         findViewById<Button>(R.id.button_increment).setOnClickListener {
-            val newTotal = viewModel.incrementTotal()
-            updateText(newTotal)
+            viewModel.incrementTotal()
         }
     }
 }
+
